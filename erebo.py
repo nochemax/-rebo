@@ -3,7 +3,6 @@ import time
 import sys
 import threading
 
-import subprocess
 from subprocess import Popen, PIPE, STDOUT
 from netdiscover import *
 
