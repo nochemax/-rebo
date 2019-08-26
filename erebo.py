@@ -15,8 +15,8 @@ from io import open
 listamenu=["Menu de Opciones:", "1--seleccion interfaz ", "2--DCHP ","3--Config memory kernel ","4--config ip y port locales","5--Exit"]#Menu Princcipal
 
 ip_router=""
-ip_rango=['192.168.1.1','192.168.1.2']
-ip_rv=['192.168.1.1','192.168.1.2','192.168.1.13']
+ip_rango=[]
+ip_rv=[]
 ip_ataque=""
 ip_total=8
 ip_intrusa=""
