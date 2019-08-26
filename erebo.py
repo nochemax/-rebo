@@ -80,109 +80,153 @@ def Menu_DHCP ( ip_router, ip_rango ):
 	ip_rsl=0
 	ip_min=0
 	ip_max=0
+	pase=""
 
-	print("configure DHCP ")
+	while True:
 
-	ip_router=(input("Introduzca ip_router: "))
-	print("Ip Router: "+ip_router)
-	ip_min=(int(input("Introduzca rango ip_router min 1: ")))
-	ip_max=(int(input("Introduzca rango ip_router max 255: ")))
-
-
-	print("configure calculate DHCP ")
+		try:
+			print("configure DHCP ")
+			pase=(input("selecccion manual = Y o automatico = N "))
 	
-	ip_rsl=ip_max - ip_min
-	ip_cont=(ip_min)
-	print(ip_rsl)
+			if(pase=="Y"):
+				ip_router=(input("Introduzca ip_router: "))
+				ip_rango=(input("Introduzca ipS separe con , : "))		
+				print("Ip Router: "+ip_router)
 
-	for ip_cont in range (ip_rsl):
+			else:
+				ip_router=(input("Introduzca ip_router: "))
+				print("Ip Router: "+ip_router)
+				ip_min=(int(input("Introduzca rango ip_router min 1: ")))
+				ip_max=(int(input("Introduzca rango ip_router max 255: ")))
 
-		ip_cont=(ip_cont+1)
-		ip_contF=(str(ip_cont))
-		ip_new=(str("192.168.1."+ip_contF))
-		print(ip_new)
-		ip_rango.append("192.168.1."+ip_contF)
+
+			print("configure calculate DHCP ")
+	
+			ip_rsl=ip_max - ip_min
+			ip_cont=(ip_min)
+			print(ip_rsl)
+
+			for ip_cont in range (ip_rsl):
+
+				ip_cont=(ip_cont+1)
+				ip_contF=(str(ip_cont))
+				ip_new=(str("192.168.1."+ip_contF))
+				print(ip_new)
+				ip_rango.append("192.168.1."+ip_contF)
 		
 
-	return ip_router, ip_rango
+			return ip_router, ip_rango
+			break
 
+		except TypeError:
+			print("introduzca datos de nuevo ")
 
 
 def DHCP ():
 
-	ip_h=(0)
-	ip_volcado=""
-	mystr="'"
-	print("ip calculate")
-	disc = Discover()
-	p=disc.scan(ip_range="192.168.1.0/24")
-	print("comprobacion estados ip")
-	print(p)
-	print("ordenandos datos comprobacion")
-	df=pd.DataFrame(p, columns=['ip'])
-	print(df)
-	print('\n')
-	print("generando salida de datos")
-	ip_h=df['ip'].tolist()	
-	print(ip_h)
-	print("limpiando datos str")
+	while True:
+
+		try:
+			ip_h=(0)
+			ip_volcado=""
+			mystr="'"
+			print("ip calculate")
+			disc = Discover()
+			p=disc.scan(ip_range="192.168.1.0/24")
+			print("comprobacion estados ip")
+			print(p)
+			print("ordenandos datos comprobacion")
+			df=pd.DataFrame(p, columns=['ip'])
+			print(df)
+			print('\n')
+			print("generando salida de datos")
+			ip_h=df['ip'].tolist()	
+			print(ip_h)
+			print("limpiando datos str")
 	
-	for i in ip_h:
+			for i in ip_h:
 		
-		ip_volcado=(str(i))
-		ip_volcado1=ip_volcado.replace('b','')
-		ip_volcado2=ip_volcado1.replace(mystr,'') 
-		print(ip_volcado2)
-		ip_rv.append(ip_volcado2)
+				ip_volcado=(str(i))
+				ip_volcado1=ip_volcado.replace('b','')
+				ip_volcado2=ip_volcado1.replace(mystr,'') 
+				print(ip_volcado2)
+				ip_rv.append(ip_volcado2)
 
-	return ip_rv
+			return ip_rv
+			break
+
+		except TypeError:
+			print("introduzca datos de nuevo ")
 
 
-def DHCP_VyA(ip_rango, ip_rv):		
-			
-	if(ip_rv==ip_rango):
+
+def DHCP_VyA(ip_rango, ip_rv):
+
+
+	while True:
+
+		try:
+			if(ip_rv==ip_rango):
 		
-		print("DHCP SEGURO")
+				print("DHCP SEGURO")
 	
-	else:
+			else:
 		
-		print("detectada ip intrusa")
-		print("procesando datos ip ")
+				print("detectada ip intrusa")
+				print("procesando datos ip ")
 		
-		q=(len(ip_rango))
-		w=(len(ip_rv))
-		e=(q-w)
-		ip_intrusa=(ip_rv[e])
-		print("Mostrando datos de proceso")
-		print(q, "-", w, "=", e)
-		print("--------------------------")
-		print("capturando datos del intruso", ip_intrusa )
-		print("--------------------------")					
-		y = threading.Thread(target=p0f_DHCP, args=(wlan,))
-		y.start()				
-		os.system('nmap -sV -O '+ip_intrusa)
-		os.system('pkill p0f')
-		print("captura de datos terminada")
-		print("--------------------------")		 
-		print("Jodiendo al intruso")		
-		print("--------------------------")
-		u = threading.Thread(target=hp3_DHCP, args=(ip_intrusa,))
-		u.start()
+				q=(len(ip_rango))
+				w=(len(ip_rv))
+				e=(q-w)
+				ip_intrusa=(ip_rv[e])
+				print("Mostrando datos de proceso")
+				print(q, "-", w, "=", e)
+				print("--------------------------")
+				print("capturando datos del intruso", ip_intrusa )
+				print("--------------------------")					
+				y = threading.Thread(target=p0f_DHCP, args=(wlan,))
+				y.start()				
+				os.system('nmap -sV -O '+ip_intrusa)
+				os.system('pkill p0f')
+				print("captura de datos terminada")
+				print("--------------------------")		 
+				print("Jodiendo al intruso")		
+				print("--------------------------")
+				u = threading.Thread(target=hp3_DHCP, args=(ip_intrusa,))
+				u.start()
 
-		key=(input("Detener el ataque (Y/N: "))
-		if( key == "Y" ):
-			os.system('pkill hping3')
-		
-		
-#pof    ***
-#nmap   ***
-#hping3 ***
+				key=(input("Detener el ataque (Y/N: "))
+				if( key == "Y" ):
+					os.system('pkill hping3')
+			break
+
+		except TypeError:
+			print("introduzca datos de nuevo ")		
+
+		# 5* = complet
+		#p0f     ****
+		#nmap    ****
+		#hping3  ****
 	
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$	Config memory kernel $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$				
-# procesando
+#|- procesando config memoria kernel 
+#|
+#|--PRoc
+#|
+#|-- Paquete maliciosos (Marcianos) 
+#|
+#|-- Syn Cookies (bufer handshake)
+#|
+#|-- Ip Connection Tracking -->
+
+
+
+
+
+
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
